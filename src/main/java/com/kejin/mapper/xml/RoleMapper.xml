@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kejin.mapper.RoleMapper">
+
+    <delete id="deleteRole" parameterType="integer">
+        DELETE from userrole WHERE  roleId =#{roleId}
+    </delete>
+
+    <select id="getRoleIdByUserCode" resultType="java.lang.Integer">
+        select r.roleId from `user` u
+        INNER JOIN userrole ur ON u.userId = ur.userId
+        INNER JOIN role r ON ur.roleId =r.roleId
+        WHERE u.userCode = #{userCode}
+    </select>
+
+    <select id="getRoleListByUserCode" resultType="java.lang.String">
+        select r.roleCode from `user` u
+        INNER JOIN userrole ur ON u.userId = ur.userId
+        INNER JOIN role r ON ur.roleId =r.roleId
+        WHERE u.userCode = #{userCode}
+    </select>
+
+    <select id="getRoleCodeByUrl" resultType="java.lang.String">
+        select r.roleCode from role r
+        INNER JOIN rolemeufun rm ON rm.roleId = rm.roleId
+        INNER JOIN menufunctions mf ON mf.mfId =rm.mfId
+        WHERE mf.requestUrl = #{url}
+    </select>
+
+</mapper>

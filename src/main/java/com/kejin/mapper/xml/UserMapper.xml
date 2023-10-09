@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kejin.mapper.UserMapper">
+
+    <insert id="addUserDept" parameterType="com.kejin.controller.param.user.UserDeptParam">
+        insert into userdept(userId,deptId) value(#{userId},#{deptId})
+    </insert>
+
+    <insert id="addUserRole" parameterType="com.kejin.controller.param.user.UserRoleParam">
+        insert into userrole(userId,roleId) value(#{userId},#{roleId})
+    </insert>
+
+    <delete id="deleteUserDept" parameterType="com.kejin.controller.param.user.UserDeptParam">
+        DELETE from userdept WHERE userId =#{userId} and #deptId ={deptId}
+    </delete>
+
+    <delete id="deleteUserRole" parameterType="com.kejin.controller.param.user.UserRoleParam">
+        DELETE from userrole WHERE userId =#{userId} and roleId =#{roleId}
+    </delete>
+
+    <select id="getUserVoList" resultType="com.kejin.entity.vo.UserVo">
+        select u.userName,u.userCode,group_concat(DISTINCT  r.roleName) roleName,group_concat(DISTINCT  d.deptName) deptName
+        from `user` u
+                 INNER join userrole `ur` on u.userid = `ur`.userId
+                 inner join `role` r on `ur`.roleId = r.roleId
+                 inner join userdept ud on u.userid = ud.userId
+                 inner join dept d on ud.deptId =d.deptId
+                 ${ew.customSqlSegment}
+        GROUP BY u.userid
+    </select>
+
+</mapper>

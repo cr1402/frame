@@ -1,0 +1,22 @@
+server:
+  port: 8888
+spring:
+  datasource:
+    username: root
+    password: root
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3306/frame?useSSL=false&serverTimezone=UTC&useUnicode=true&characterEncoding=utf-8&allowPublicKeyRetrieval=true
+  application:
+    name: frameService
+mybatis-plus:
+  type-aliases-package: com.kejin.entity
+  configuration:
+    map-underscore-to-camel-case: false
+  global-config:
+    enable-sql-runner: true
+  mapper-locations: classpath:com/kejin/mapper/xml/*.xml
+logging:
+  level:
+    com.chen: debug
+  pattern:
+    dateformat: MM-dd HH:mm:ss:SSS
